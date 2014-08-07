@@ -4,7 +4,7 @@
   "description": "list all files in an s3 bucket",
   "main": "index.jd",
   "scripts": {
-    "test": "mocha test"
+    "test": "tape test/**/*.js | tap-spec"
   },
   "keywords": [
     "s3",
@@ -15,5 +15,9 @@
   "dependencies": {
     "xml-parser": "~0.1.0",
     "request": "~2.39.0"
+  },
+  "devDependencies": {
+    "tape": "~2.13.4",
+    "tap-spec": "~0.2.0"
   }
 }

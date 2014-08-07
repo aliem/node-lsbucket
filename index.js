@@ -10,6 +10,7 @@ var parse = require('./lib/parse')
  * @param {String} bucket
  * @param {String} key
  * @param {String} secret
+ * @returns {Stree}
  */
 module.exports = function (bucket, key, secret, prefix) {
   return new Stree(bucket, key, secret, (prefix || ''));
@@ -22,6 +23,7 @@ module.exports = function (bucket, key, secret, prefix) {
  * @param {String} key
  * @param {String} secret
  * @param {String} prefix
+ * @returns {Stree}
  */
 function Stree (bucket, key, secret, prefix) {
   EventEmitter.call(this);
