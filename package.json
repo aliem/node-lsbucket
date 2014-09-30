@@ -1,8 +1,11 @@
 {
   "name": "lsbucket",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "list all files in an s3 bucket",
-  "main": "index.jd",
+  "author": "Lorenzo Giuliani <lorenzo@getcontentment.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "https://github.com/aliem/node-lsbucket.git",
   "scripts": {
     "test": "tape test/**/*.js | tap-spec"
   },
@@ -10,8 +13,6 @@
     "s3",
     "aws"
   ],
-  "author": "Lorenzo Giuliani <lorenzo@getcontentment.com>",
-  "license": "ISC",
   "dependencies": {
     "xml-parser": "~0.1.0",
     "request": "~2.39.0"

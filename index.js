@@ -19,6 +19,11 @@ module.exports = function (bucket, key, secret, prefix) {
 };
 
 /**
+ * Export the Event Emitter
+ */
+module.exports.Stree = Stree;
+
+/**
  * Stree Object
  *
  * @param {String} bucket   S3 bucket
