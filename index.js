@@ -2,28 +2,30 @@ var assert = require('assert');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var request = require('request');
-var parse = require('./lib/parse')
+var parse = require('./lib/parse');
+var url = require('url');
 
 /**
  * Main export
  *
- * @param {String} bucket
- * @param {String} key
- * @param {String} secret
- * @returns {Stree}
+ * @param {String} bucket   S3 bucket
+ * @param {String} key      S3 key
+ * @param {String} secret   S3 secret
+ * @param {String} prefix   optional prefix
+ * @returns {Stree}         Stree instance
  */
 module.exports = function (bucket, key, secret, prefix) {
   return new Stree(bucket, key, secret, (prefix || ''));
-}
+};
 
 /**
  * Stree Object
  *
- * @param {String} bucket
- * @param {String} key
- * @param {String} secret
- * @param {String} prefix
- * @returns {Stree}
+ * @param {String} bucket   S3 bucket
+ * @param {String} key      S3 key
+ * @param {String} secret   S3 secret
+ * @param {String} prefix   optional prefix
+ * @returns {Stree}         Stree instance
  */
 function Stree (bucket, key, secret, prefix) {
   EventEmitter.call(this);
@@ -33,14 +35,13 @@ function Stree (bucket, key, secret, prefix) {
   assert(!! secret, 'a "secret" is required');
   assert('string' === typeof prefix, 'a "prefix" is required');
 
-  this.url = 'https://' + bucket + '.s3.amazonaws.com/?prefix=' + prefix +'&max-keys=1000&marker={marker}'
+  this.url = url.format(util.format(
+    'https://%s.s3.amazonaws.com/?prefix=%s&max-keys=1000&marker={marker}', bucket, prefix));
   this.aws = {
     bucket: bucket
   , key: key
   , secret: secret
-  }
-
-  return this;
+  };
 }
 
 util.inherits(Stree, EventEmitter);
@@ -48,15 +49,15 @@ util.inherits(Stree, EventEmitter);
 /**
  * begin the listing process
  *
- * @param {String} marker
- * @returns {Stree}
+ * @param {String}  marker    marker
+ * @returns {Stree}           this
  */
 Stree.prototype.list = function (marker) {
-  var url = this.url.replace('{marker}', marker || '')
+  var url = this.url.replace('{marker}', marker || '');
+
   request.get(url, { aws: this.aws }, function (err, res) {
-    if (!! err) {
-      return this.emit('error', err)
-    }
+    if (err)
+      return this.emit('error', err);
 
     var list = parse(res.body);
     for (var i = 0; i < list.files.length; i++) {
@@ -65,11 +66,10 @@ Stree.prototype.list = function (marker) {
 
     if (list.truncated) {
       marker = list.marker;
-      this.list(marker)
+      this.list(marker);
     } else {
       this.emit('end');
     }
   }.bind(this));
   return this;
-}
-
+};
