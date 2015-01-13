@@ -1,6 +1,6 @@
 {
   "name": "lsbucket",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "list all files in an s3 bucket",
   "author": "Lorenzo Giuliani <lorenzo@getcontentment.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "aws"
   ],
   "dependencies": {
-    "xml-parser": "~0.1.0",
+    "xml-parser": "1.2.0",
     "request": "~2.39.0"
   },
   "devDependencies": {
