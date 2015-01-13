@@ -35,13 +35,13 @@ module.exports.Stree = Stree;
 function Stree (bucket, key, secret, prefix) {
   EventEmitter.call(this);
 
-  assert(!! bucket, 'a "bucket" is required');
-  assert(!! key,    'a "key" is required');
-  assert(!! secret, 'a "secret" is required');
+  assert(!!bucket, 'a "bucket" is required');
+  assert(!!key,    'a "key" is required');
+  assert(!!secret, 'a "secret" is required');
   assert('string' === typeof prefix, 'a "prefix" is required');
 
   this.url = url.format(util.format(
-    'https://%s.s3.amazonaws.com/?prefix=%s&max-keys=1000&marker={marker}', bucket, prefix));
+    'https://%s.s3.amazonaws.com/?prefix=%s&max-keys=1000', bucket, prefix));
   this.aws = {
     bucket: bucket
   , key: key
@@ -58,9 +58,12 @@ util.inherits(Stree, EventEmitter);
  * @returns {Stree}           this
  */
 Stree.prototype.list = function (marker) {
-  var url = this.url.replace('{marker}', marker || '');
+  var requestUrl = this.url
+  if (marker) {
+    url = url + '&marker=' + marker;
+  }
 
-  request.get(url, { aws: this.aws }, function (err, res) {
+  request.get(requestUrl, { aws: this.aws }, function (err, res) {
     if (err)
       return this.emit('error', err);
 
