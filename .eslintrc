@@ -1,0 +1,29 @@
+# vim: ft=yaml
+---
+env:
+    mocha: true
+    node: true
+    es6: true
+    browser: true
+ecmaFeatures:
+    modules: true
+rules:
+    strict: 0
+    no-underscore-dangle: false
+    space-in-parens: "never"
+    space-before-blocks: "always"
+    space-in-brackets: "always"
+    no-lonely-if: true
+    default-case: true
+    quotes: [1, "single", "avoid-escape"]
+    strict: false
+    no-use-before-define: "nofunc"
+    camelcase: false
+    new-cap: "newIsCap"
+    curly: [2, "multi-line"]
+    semi: [1, "never"]
+    no-process-exit: 0
+    no-unused-vars:
+        - 2
+        - vars: local
+        - args: none

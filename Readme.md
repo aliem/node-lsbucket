@@ -19,6 +19,19 @@ bucket.on('end', function () {
 bucket.list();
 ```
 
+Sample Entry:
+
+```js
+{
+   ETag: '"828ef3fdfa96f00ad9f27c383fc9ac7f"',
+   Key: 'Nelson',
+   LastModified: '2006-01-01T12:00:00.000Z',
+   Owner: { DisplayName: 'webfile', ID: 'bcaf161ca5fb16fd081034f' },
+   Size: '5',
+   StorageClass: 'STANDARD'
+}
+```
+
 
 # License
 
